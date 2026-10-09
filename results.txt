@@ -1,0 +1,99 @@
+MACHINE CONFIGURATION
+---------------------
+Processor: Intel Core Ultra 5 225U (12 cores / 14 threads, AVX2 + FMA, no AVX-512)
+Cache    : L2 10 MB (total, all cores), L3 12 MB (shared)
+RAM      : 16 GB
+OS       : Windows 11 Pro 64-bit (10.0.26200)
+Compiler : gcc 15.2.0
+
+MATRIX MULTIPLICATION: C = A * B
+--------------------------------
+Matrix  A: 500 x 500
+Matrix  B: 500 x 500
+Matrix  C: 500 x 500
+REG  size: 4 x 4
+TILE size: 32 x 32
+Unroll   : 2
+Data type: float
+Layout   : row-major
+
+Build Command: gcc -O0 matmul.c -o matmul
+Run Command  : matmul.exe
+
+i-j-k: REF  : 236.000000 (ms)
+i-k-j: PASS : 186.000000 (ms)
+j-i-k: PASS : 231.000000 (ms)
+j-k-i: PASS : 268.000000 (ms)
+k-i-j: PASS : 205.000000 (ms)
+k-j-i: PASS : 238.000000 (ms)
+
+Scalar replacement (i-k-j): PASS : 171.000000 (ms)
+Register blocking (i-j-k) : PASS : 229.000000 (ms)
+Tile blocking (i-k-j)     : PASS : 240.000000 (ms)
+Loop unroll (i-k-j)       : PASS : 118.000000 (ms)
+Transpose B (i-j-k)       : PASS : 222.000000 (ms)
+
+Build Command: gcc -O1 matmul.c -o matmul
+Run Command  : matmul.exe
+
+i-j-k: REF  : 246.000000 (ms)
+i-k-j: PASS : 38.000000 (ms)
+j-i-k: PASS : 223.000000 (ms)
+j-k-i: PASS : 123.000000 (ms)
+k-i-j: PASS : 40.000000 (ms)
+k-j-i: PASS : 125.000000 (ms)
+
+Scalar replacement (i-k-j): PASS : 33.000000 (ms)
+Register blocking (i-j-k) : PASS : 70.000000 (ms)
+Tile blocking (i-k-j)     : PASS : 36.000000 (ms)
+Loop unroll (i-k-j)       : PASS : 27.000000 (ms)
+Transpose B (i-j-k)       : PASS : 226.000000 (ms)
+
+Build Command: gcc -O2 matmul.c -o matmul
+Run Command  : matmul.exe
+
+i-j-k: REF  : 55.000000 (ms)
+i-k-j: PASS : 34.000000 (ms)
+j-i-k: PASS : 53.000000 (ms)
+j-k-i: PASS : 122.000000 (ms)
+k-i-j: PASS : 35.000000 (ms)
+k-j-i: PASS : 119.000000 (ms)
+
+Scalar replacement (i-k-j): PASS : 34.000000 (ms)
+Register blocking (i-j-k) : PASS : 16.000000 (ms)
+Tile blocking (i-k-j)     : PASS : 35.000000 (ms)
+Loop unroll (i-k-j)       : PASS : 27.000000 (ms)
+Transpose B (i-j-k)       : PASS : 52.000000 (ms)
+
+Build Command: gcc -O3 matmul.c -o matmul
+Run Command  : matmul.exe
+
+i-j-k: REF  : 56.000000 (ms)
+i-k-j: PASS : 11.000000 (ms)
+j-i-k: PASS : 58.000000 (ms)
+j-k-i: PASS : 123.000000 (ms)
+k-i-j: PASS : 13.000000 (ms)
+k-j-i: PASS : 117.000000 (ms)
+
+Scalar replacement (i-k-j): PASS : 10.000000 (ms)
+Register blocking (i-j-k) : PASS : 20.000000 (ms)
+Tile blocking (i-k-j)     : PASS : 9.000000 (ms)
+Loop unroll (i-k-j)       : PASS : 10.000000 (ms)
+Transpose B (i-j-k)       : PASS : 54.000000 (ms)
+
+Build Command: gcc -O3 -march=native matmul.c -o matmul
+Run Command  : matmul.exe
+
+i-j-k: REF  : 56.000000 (ms)
+i-k-j: PASS : 7.000000 (ms)
+j-i-k: PASS : 56.000000 (ms)
+j-k-i: PASS : 109.000000 (ms)
+k-i-j: PASS : 7.000000 (ms)
+k-j-i: PASS : 107.000000 (ms)
+
+Scalar replacement (i-k-j): PASS : 6.000000 (ms)
+Register blocking (i-j-k) : PASS : 16.000000 (ms)
+Tile blocking (i-k-j)     : PASS : 12.000000 (ms)
+Loop unroll (i-k-j)       : PASS : 6.000000 (ms)
+Transpose B (i-j-k)       : PASS : 53.000000 (ms)
+
